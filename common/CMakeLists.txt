@@ -17,16 +17,22 @@ add_library(gpucommon STATIC
 )
 
 if(BUILD_TESTING)
-    add_executable(test_util tests/test_util.cc ${CMAKE_SOURCE_DIR}/third_party/json11/json11.cpp)
+    add_executable(test_util tests/test_util.cc)
     target_include_directories(test_util PRIVATE ../cereal)
-    target_link_libraries(test_util common Catch2::Catch2WithMain)
+    target_link_libraries(test_util common json11)
 
-    add_executable(test_swaglog tests/test_swaglog.cc  ${CMAKE_SOURCE_DIR}/third_party/json11/json11.cpp)
+    add_executable(test_swaglog tests/test_swaglog.cc)
     target_include_directories(test_swaglog PRIVATE ../cereal)
-    target_link_libraries(test_swaglog common ${ZMQ_LINK_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} Catch2::Catch2WithMain)
+    target_link_libraries(test_swaglog common json11 ${ZMQ_LINK_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 endif()
 
-
 # Cython
-# envCython.Program('clock.so', 'clock.pyx')
-# envCython.Program('params_pyx.so', 'params_pyx.pyx', LIBS=envCython['LIBS'] + [_common, 'zmq', 'json11'])
+add_cython_target(clock clock.pyx CXX)
+add_library(clock MODULE ${clock})
+target_include_directories(clock PRIVATE ${Python3_INCLUDE_DIRS})
+target_link_libraries(clock ${Python3_LIBRARIES})
+
+add_cython_target(params_pyx clock.pyx CXX)
+add_library(params_pyx MODULE ${params_pyx})
+target_include_directories(params_pyx PRIVATE ${Python3_INCLUDE_DIRS})
+target_link_libraries(params_pyx ${Python3_LIBRARIES} common ${ZMQ_LINK_LIBRARIES} json11)

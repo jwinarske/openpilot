@@ -43,15 +43,15 @@ const int SEGMENT_LENGTH = LOGGERD_TEST ? atoi(getenv("LOGGERD_SEGMENT_LENGTH"))
 
 struct LogCameraInfo {
   CameraType type;
-  const char *filename;
   VisionStreamType stream_type;
-  int frame_width, frame_height;
+  const char *filename;
   int fps;
   int bitrate;
   bool is_h265;
   bool has_qcamera;
   bool enable;
   bool record;
+  int frame_width, frame_height;
 };
 
 const LogCameraInfo cameras_logged[] = {

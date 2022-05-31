@@ -6,6 +6,7 @@
 
 #include <cassert>
 #include <cstring>
+#include <cstdarg>
 #include <limits>
 #include <mutex>
 #include <string>

@@ -82,21 +82,21 @@ std::optional<ProcStat> procStat(std::string stat) {
       throw std::invalid_argument("stat");
     }
     ProcStat p = {
-      .name = name,
       .pid = stoi(v[StatPos::pid - 1]),
-      .state = v[StatPos::state - 1][0],
       .ppid = stoi(v[StatPos::ppid - 1]),
-      .utime = stoul(v[StatPos::utime - 1]),
-      .stime = stoul(v[StatPos::stime - 1]),
+      .processor = stoi(v[StatPos::processor - 1]),
+      .state = v[StatPos::state - 1][0],
       .cutime = stol(v[StatPos::cutime - 1]),
       .cstime = stol(v[StatPos::cstime - 1]),
       .priority = stol(v[StatPos::priority - 1]),
       .nice = stol(v[StatPos::nice - 1]),
       .num_threads = stol(v[StatPos::num_threads - 1]),
-      .starttime = stoull(v[StatPos::starttime - 1]),
+      .utime = stoul(v[StatPos::utime - 1]),
+      .stime = stoul(v[StatPos::stime - 1]),
       .vms = stoul(v[StatPos::vsize - 1]),
       .rss = stoul(v[StatPos::rss - 1]),
-      .processor = stoi(v[StatPos::processor - 1]),
+      .starttime = stoull(v[StatPos::starttime - 1]),
+      .name = name,
     };
     return p;
   } catch (const std::invalid_argument &e) {
