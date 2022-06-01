@@ -17,6 +17,7 @@ ExternalProject_Add(yuv_external
         -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
         -DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}
         -DCMAKE_STAGING_PREFIX=${CMAKE_BINARY_DIR}/out/usr
+        -DCMAKE_POSITION_INDEPENDENT_CODE=ON
     )
 add_library(yuv INTERFACE)
 target_include_directories(yuv INTERFACE ${CMAKE_BINARY_DIR}/out/usr/include)
