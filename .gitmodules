@@ -18,7 +18,3 @@
 	path = rednose_repo
 	url = ../../commaai/rednose.git
         branch = master
-[submodule "libyuv"]
-	path = third_party/libyuv
-	url = https://chromium.googlesource.com/libyuv/libyuv
-	branch = main

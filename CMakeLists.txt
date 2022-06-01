@@ -16,23 +16,28 @@ project(selfdrive
     LANGUAGES CXX C
     )
 
+if(APPLE AND CMAKE_HOST_APPLE)
+    set(Qt5_DIR "/opt/homebrew/opt/qt@5/lib/cmake/Qt5")
+    set(OPENSSL_ROOT_DIR "/opt/homebrew/opt/openssl@3")
+endif()
+
 find_package(CapnProto REQUIRED)
 find_package(Cython REQUIRED)
-find_package(PkgConfig REQUIRED)
 find_package(Threads REQUIRED)
+
+find_package(PkgConfig REQUIRED)
 pkg_check_modules(JPEG REQUIRED libjpeg)
 pkg_check_modules(ZMQ REQUIRED libzmq)
 pkg_check_modules(FFMPEG REQUIRED libavformat libavcodec libswscale libavutil)
 pkg_check_modules(USB REQUIRED libusb-1.0)
 pkg_check_modules(Z REQUIRED zlib)
+find_package(OpenSSL REQUIRED)
 pkg_check_modules(SYSTEMD libsystemd)
 pkg_check_modules(OPENCL OpenCL)
 if(OPENCL_FOUND)
     add_compile_definitions(CL_TARGET_OPENCL_VERSION=300)
 endif()
-
 pkg_check_modules(CURL REQUIRED libcurl)
-# pkg_check_modules(CRYPTO REQUIRED libcrypto)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)
@@ -70,6 +75,7 @@ add_subdirectory(selfdrive/loggerd)
 add_subdirectory(selfdrive/modeld)
 add_subdirectory(selfdrive/proclogd)
 add_subdirectory(selfdrive/sensord)
+add_subdirectory(selfdrive/ui)
 add_subdirectory(third_party)
 
 
