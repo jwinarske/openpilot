@@ -4,6 +4,7 @@
 #
 find_program(PYTHON3 python3 REQUIRED)
 set(GEN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/models/generated)
+set(PYTHONPATH "PYTHONPATH=rednose/helpers:selfdrive/locationd/models:")
 file(MAKE_DIRECTORY ${GEN_DIR})
 macro(generate_kf model python_file)
     set(EXTRA_ARTIFACT)
@@ -12,7 +13,7 @@ macro(generate_kf model python_file)
     endif()
     add_custom_command(
         OUTPUT ${GEN_DIR}/${model}.cpp ${GEN_DIR}/${model}.h ${EXTRA_ARTIFACT}
-        COMMAND ${CMAKE_COMMAND} -E env "PYTHONPATH=rednose/helpers:selfdrive/locationd/models:" ${PYTHON3} ${python_file} ${model} ${GEN_DIR}
+        COMMAND ${CMAKE_COMMAND} -E env ${PYTHONPATH} ${PYTHON3} ${python_file} ${model} ${GEN_DIR}
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         COMMENT "Generating ${model}_kf"
         VERBATIM
