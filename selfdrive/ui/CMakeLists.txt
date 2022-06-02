@@ -16,12 +16,17 @@ set(BASE_LIBS
     CapnProto::capnp CapnProto::kj m OpenCL OpenSSL::SSL OpenSSL::Crypto ${CMAKE_THREAD_LIBS_INIT}
 )
 
-set(BUILD_MAPS OFF)
+set(MAPS OFF)
+if (${TARGET_ARCH} STREQUAL "larch64" OR ${TARGET_ARCH} STREQUAL "x86_64")
+    set(MAPS ON)
+endif()
 #maps = arch in ['larch64', 'x86_64']
 
+if (MAPS AND ${TARGET_ARCH} STREQUAL "x86_64")
 #if maps and arch == 'x86_64':
 #  rpath = [Dir(f"#third_party/mapbox-gl-native-qt/{arch}").srcnode().abspath]
 #  qt_env["RPATH"] += rpath
+endif()
 
 if(APPLE)
     list(REMOVE_ITEM BASE_LIBS OpenCL)
@@ -76,9 +81,11 @@ target_link_libraries(_soundd PRIVATE ${QT_LIBS})
 if (BUILD_TESTING)
     add_executable(playsound tests/playsound.cc)
     target_link_libraries(playsound PRIVATE ${BASE_LIBS} ${QT_LIBS})
+    add_test(NAME playsound COMMAND playsound)
 
     add_executable(test_sound tests/test_runner.cc soundd/sound.cc tests/test_sound.cc)
     target_link_libraries(test_sound PRIVATE ${QT_LIBS})
+    add_test(NAME test_sound COMMAND test_sound)
 endif()
 
 add_library(python_helpers qt/qt_window.cc)
@@ -155,6 +162,7 @@ if (APPLE OR BUILD_EXTRAS)
         add_executable(test_replay replay/tests/test_runner.cc replay/tests/test_replay.cc)
         target_include_directories(test_replay PRIVATE ${FFMPEG_INCLUDE_DIRS})
         target_link_libraries(test_replay PRIVATE ${REPLAY_LIBS})
+        # add_test(NAME test_replay COMMAND test_replay)
     endif()
 
 endif()

@@ -34,4 +34,5 @@ if (BUILD_TESTING)
     panda.cc
   )
   target_link_libraries(test_boardd_usbprotocol PRIVATE ${LIBS})
+  add_test(NAME test_boardd_usbprotocol COMMAND test_boardd_usbprotocol)
 endif()

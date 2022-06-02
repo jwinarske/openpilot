@@ -68,4 +68,5 @@ if(BUILD_TESTING)
         target_link_libraries(ae_gray_test PUBLIC OpenCL)
     endif()
 
+    add_test(NAME ae_gray_test COMMAND ae_gray_test) 
 endif()

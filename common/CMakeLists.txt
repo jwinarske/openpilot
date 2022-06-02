@@ -20,10 +20,12 @@ if(BUILD_TESTING)
     add_executable(test_util tests/test_util.cc)
     target_include_directories(test_util PRIVATE ../cereal)
     target_link_libraries(test_util common json11)
+    add_test(NAME test_util COMMAND test_util)
 
     add_executable(test_swaglog tests/test_swaglog.cc)
     target_include_directories(test_swaglog PRIVATE ../cereal)
     target_link_libraries(test_swaglog common json11 ${ZMQ_LINK_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+    add_test(NAME test_swaglog COMMAND test_swaglog)
 endif()
 
 # Cython

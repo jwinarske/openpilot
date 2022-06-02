@@ -53,4 +53,5 @@ if (BUILD_TESTING)
         ${LIBS}
         logger
     )
+    add_test(NAME test_logger COMMAND test_logger)
 endif()
