@@ -138,17 +138,22 @@ if (APPLE OR BUILD_EXTRAS)
 
     add_library(qt_replay STATIC ${REPLAY_SRC})
     target_link_libraries(qt_replay PRIVATE ${BASE_LIBS} ${QT_LIBS})
-    target_include_directories(qt_replay PRIVATE ${CMAKE_SOURCE_DIR}/third_party/libyuv/include)
+    target_include_directories(qt_replay PRIVATE
+	${CMAKE_BINARY_DIR}/out/usr/include
+        ${FFMPEG_INCLUDE_DIRS}
+	)
     target_compile_options(qt_replay PRIVATE "-Wno-deprecated-declarations")
- 
+
     add_executable(replay replay/main.cc)
     set(REPLAY_LIBS qt_replay ${FFMPEG_LINK_LIBRARIES} bz2 ${CURL_LINK_LIBRARIES} yuv ncurses ${QT_LIBS})
+    target_include_directories(replay PRIVATE ${FFMPEG_INCLUDE_DIRS})
     target_link_libraries(replay PRIVATE ${REPLAY_LIBS})
     add_executable(watch3 watch3.cc)
     target_link_libraries(watch3 PRIVATE ${QT_LIBS} common json11 ${ZMQ_LINK_LIBRARIES} visionipc messaging)
 
     if (BUILD_TESTING)
         add_executable(test_replay replay/tests/test_runner.cc replay/tests/test_replay.cc)
+        target_include_directories(test_replay PRIVATE ${FFMPEG_INCLUDE_DIRS})
         target_link_libraries(test_replay PRIVATE ${REPLAY_LIBS})
     endif()
 

@@ -1,0 +1,22 @@
+
+option(BUILD_TESTING "build test files" OFF)
+option(BUILD_EXTRAS "build misc extras, like setup and installer files" OFF)
+option(BUILD_KAITAI "Regenerate kaitai struct parsers" OFF)
+option(BUILD_ASAN "turn on ASAN" OFF)
+option(BUILD_UBSAN "turn on UBSan" OFF)
+option(BUILD_CLAZY "build with clazy" OFF)
+option(BUILD_COMPILE_DB "build clang compilation database" OFF)
+option(BUILD_SNPE "use SNPE on PC" OFF)
+option(BUILD_NO_THNEED "avoid using thneed" ON)
+
+set(TICI OFF)
+if(EXISTS "/TICI")
+    set(TICI ON)
+    MESSAGE(STATUS "TICI=${TICI}")
+endif()
+
+set(USE_WEBCAM OFF)
+if(DEFINED ENV{USE_WEBCAM})
+    set(USE_WEBCAM ON)
+    MESSAGE(STATUS "USE_WEBCAM=${USE_WEBCAM}")
+endif()
