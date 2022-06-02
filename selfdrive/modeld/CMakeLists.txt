@@ -1,12 +1,8 @@
 
-#libs = [cereal, messaging, common, visionipc, gpucommon,
-#        'OpenCL', 'SNPE', 'capnp', 'zmq', 'kj', 'yuv']
-
 set(LIBS
     cereal messaging common visionipc gpucommon json11
-    ${CMAKE_THREAD_LIBS_INIT} OpenCL snpe
+    ${CMAKE_THREAD_LIBS_INIT} OpenCL::OpenCL snpe yuv
     CapnProto::capnp CapnProto::kj ${ZMQ_LINK_LIBRARIES}
-    yuv
 )
 
 #def get_dlsym_offset():
@@ -51,8 +47,6 @@ if (TRUE)
     endif()
 
     if(APPLE)
-        list(REMOVE_ITEM LIBS OpenCL)
-        list(APPEND LIBS "-framework OpenCL")
         list(REMOVE_ITEM LIBS snpe)
         list(REMOVE_ITEM COMMON_SRC runners/snpemodel.cc)
     endif()

@@ -3,7 +3,7 @@ set(LIBS
     CapnProto::capnp CapnProto::kj
     ${CMAKE_THREAD_LIBS_INIT}
     ${FFMPEG_LINK_LIBRARIES}
-    json11 messaging visionipc OpenCL
+    json11 messaging visionipc OpenCL::OpenCL
     ${Z_LINK_LIBRARIES}
     ${ZMQ_LINK_LIBRARIES}
     yuv
@@ -15,15 +15,10 @@ set(SRC_FILES
     encoder/encoder.cc
 )
 
-if (BUILD_QCOM)
+if (${TARGET_ARCH} STREQUAL "larch64")
     list(APPEND SRC_FILES encoder/v4l_encoder.cc)
 else()
     list(APPEND SRC_FILES encoder/ffmpeg_encoder.cc)
-endif()
-
-if (APPLE)
-    list(REMOVE_ITEM LIBS OpenCL)
-    list(APPEND LIBS "-framework OpenCL")
 endif()
 
 

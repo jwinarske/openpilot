@@ -1,3 +1,4 @@
+
 if(APPLE AND CMAKE_HOST_APPLE)
     MESSAGE(STATUS "OSX_ARCHITECTURES=${OSX_ARCHITECTURES}")
     set(Qt5_DIR "/opt/homebrew/opt/qt@5/lib/cmake/Qt5")
@@ -21,4 +22,3 @@ if(OpenCL_FOUND)
     add_compile_definitions(CL_TARGET_OPENCL_VERSION=220)
 endif()
 pkg_check_modules(CURL REQUIRED libcurl)
-

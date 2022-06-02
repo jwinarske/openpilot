@@ -19,7 +19,6 @@ project(selfdrive
 include (options)
 include (detect_target_arch)
 include (get_deps)
-include (rednose_config)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)

@@ -4,7 +4,7 @@ set(SRC_FILES main.cc
     transforms/rgb_to_yuv.cc
     imgproc/utils.cc
 )
-if (BUILD_QCOM)
+if (${TARGET_ARCH} STREQUAL "larch64")
     list(APPEND SRC_FILES cameras/camera_qcom2.cc)
 endif()
 
@@ -20,6 +20,7 @@ target_link_libraries(camerad PUBLIC
     common gpucommon
     cereal messaging
     json11 visionipc
+    OpenCL::OpenCL
     CapnProto::capnp CapnProto::kj
     ${CMAKE_THREAD_LIBS_INIT}
     ${JPEG_LINK_LIBRARIES}
@@ -28,14 +29,8 @@ target_link_libraries(camerad PUBLIC
     m
 )
 
-if (BUILD_QCOM)
+if (${TARGET_ARCH} STREQUAL "larch64")
     target_link_libraries(camerad PUBLIC atomic)
-endif()
-
-if (APPLE)
-    target_link_libraries(camerad PUBLIC "-framework OpenCL")
-else()
-    target_link_libraries(camerad PUBLIC OpenCL)
 endif()
 
 
@@ -56,17 +51,12 @@ if(BUILD_TESTING)
         visionipc
         json11
         CapnProto::capnp
+        OpenCL::OpenCL
         ${JPEG_LINK_LIBRARIES}
         ${ZMQ_LINK_LIBRARIES}
         yuv
         ${CMAKE_THREAD_LIBS_INIT}
         )
-
-    if (APPLE)
-        target_link_libraries(ae_gray_test PUBLIC "-framework OpenCL")
-    else()
-        target_link_libraries(ae_gray_test PUBLIC OpenCL)
-    endif()
 
     add_test(NAME ae_gray_test COMMAND ae_gray_test) 
 endif()

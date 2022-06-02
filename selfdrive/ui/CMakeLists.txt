@@ -12,8 +12,9 @@ set(QT_LIBS Qt5::Core Qt5::Widgets Qt5::Concurrent Qt5::Gui Qt5::Location
             Qt5::DBus Qt5::OpenGL Qt5::OpenGLExtensions)
 
 set(BASE_LIBS
-    gpucommon common messaging cereal visionipc transformations ${ZMQ_LINK_LIBRARIES} json11
-    CapnProto::capnp CapnProto::kj m OpenCL OpenSSL::SSL OpenSSL::Crypto ${CMAKE_THREAD_LIBS_INIT}
+    gpucommon common messaging cereal visionipc transformations json11
+    CapnProto::capnp CapnProto::kj OpenCL::OpenCL OpenSSL::SSL OpenSSL::Crypto 
+    ${ZMQ_LINK_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} m
 )
 
 set(MAPS OFF)
@@ -26,11 +27,6 @@ if (MAPS AND ${TARGET_ARCH} STREQUAL "x86_64")
 #if maps and arch == 'x86_64':
 #  rpath = [Dir(f"#third_party/mapbox-gl-native-qt/{arch}").srcnode().abspath]
 #  qt_env["RPATH"] += rpath
-endif()
-
-if(APPLE)
-    list(REMOVE_ITEM BASE_LIBS OpenCL)
-    list(APPEND BASE_LIBS "-framework OpenCL")
 endif()
 
 set(WIDGETS_SRC

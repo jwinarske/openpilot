@@ -22,7 +22,7 @@ set(LIBS
     ${ZMQ_LINK_LIBRARIES}
 )
 
-if (BUILD_QCOM)
+if (${TARGET_ARCH} STREQUAL "larch64")
     list(APPEND LIBS i2c)
 endif()
 

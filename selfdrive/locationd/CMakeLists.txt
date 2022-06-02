@@ -4,7 +4,7 @@
 #
 find_program(PYTHON3 python3 REQUIRED)
 set(GEN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/models/generated)
-set(PYTHONPATH "PYTHONPATH=rednose/helpers:selfdrive/locationd/models:")
+set(GEN_MODEL_CMD ${PYTHON3} ${python_file} ${model} ${GEN_DIR})
 file(MAKE_DIRECTORY ${GEN_DIR})
 macro(generate_kf model python_file)
     set(EXTRA_ARTIFACT)
@@ -13,7 +13,7 @@ macro(generate_kf model python_file)
     endif()
     add_custom_command(
         OUTPUT ${GEN_DIR}/${model}.cpp ${GEN_DIR}/${model}.h ${EXTRA_ARTIFACT}
-        COMMAND ${CMAKE_COMMAND} -E env ${PYTHONPATH} ${PYTHON3} ${python_file} ${model} ${GEN_DIR}
+        COMMAND ${CMAKE_COMMAND} -E env "PYTHONPATH=rednose/helpers:selfdrive/locationd/models:" ${GEN_MODEL_CMD}
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         COMMENT "Generating ${model}_kf"
         VERBATIM
@@ -41,7 +41,7 @@ set(KF_SRC
 
 if(NOT ${TARGET_ARCH} STREQUAL "larch64")
     list(APPEND KF_SRC
-	models/generated/feature_handler_5.cpp
+        models/generated/feature_handler_5.cpp
         models/generated/gnss.cpp
         models/generated/loc_4.cpp
         models/generated/pos_computer_4.cpp
