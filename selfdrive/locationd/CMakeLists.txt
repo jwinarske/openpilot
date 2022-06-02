@@ -87,16 +87,17 @@ add_executable(ubloxd
 target_compile_definitions(ubloxd PRIVATE KS_STR_ENCODING_NONE)
 target_include_directories(ubloxd PUBLIC ${CMAKE_SOURCE_DIR}/third_party)
 
-target_link_libraries(ubloxd PRIVATE
+set(LOC_LIBS
     cereal
     messaging
     common
     json11
-    kaitai
     ${ZMQ_LINK_LIBRARIES}
     CapnProto::capnp CapnProto::kj
     ${CMAKE_THREAD_LIBS_INIT}
 )
+
+target_link_libraries(ubloxd PRIVATE ${LOC_LIBS} kaitai)
 
 add_executable(locationd
     locationd.cc
@@ -105,23 +106,10 @@ add_executable(locationd
 )
 
 target_include_directories(locationd PRIVATE generated ${CMAKE_SOURCE_DIR}/cereal)
+target_link_libraries(locationd PRIVATE ${LOC_LIBS} transformations kf)
 
-set(LOC_LIBS
-    cereal
-    messaging
-    common
-    transformations
-    json11
-    kf
-    ${ZMQ_LINK_LIBRARIES}
-    CapnProto::capnp CapnProto::kj
-    ${CMAKE_THREAD_LIBS_INIT}
-)
-
-target_link_libraries(locationd PRIVATE ${LOC_LIBS})
-
-if (EXISTS liblocationd.cc)
+if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/liblocationd.cc)
     add_library(liblocationd SHARED liblocationd.cc)
-    target_link_libraries(liblocationd PRIVATE ${LOC_LIBS})
+    target_link_libraries(liblocationd PRIVATE ${LOC_LIBS} transformations kf)
     set_target_properties(liblocationd PROPERTIES OUTPUT_NAME "locationd")
 endif()
