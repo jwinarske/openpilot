@@ -82,6 +82,7 @@ if (BUILD_TESTING)
     add_executable(playsound tests/playsound.cc)
     target_link_libraries(playsound PRIVATE ${BASE_LIBS} ${QT_LIBS})
     add_test(NAME playsound COMMAND playsound)
+    set_tests_properties(playsound PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
 
     add_executable(test_sound tests/test_runner.cc soundd/sound.cc tests/test_sound.cc)
     target_link_libraries(test_sound PRIVATE ${QT_LIBS})
