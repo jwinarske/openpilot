@@ -43,11 +43,13 @@ if (APPLE)
     add_compile_definitions(GL_SILENCE_DEPRECATION)
 endif()
 
+
 add_subdirectory(common)
 add_subdirectory(common/kalman)
 add_subdirectory(common/transformations)
 add_subdirectory(cereal)
 add_subdirectory(opendbc/can)
+add_subdirectory(panda)
 add_subdirectory(selfdrive/boardd)
 add_subdirectory(selfdrive/camerad)
 add_subdirectory(selfdrive/clocksd)

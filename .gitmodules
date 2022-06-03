@@ -1,7 +1,7 @@
 [submodule "panda"]
 	path = panda
-	url = ../../commaai/panda.git
-        branch = master
+	url = ../../jwinarske/panda.git
+        branch = jw/cmake
 [submodule "opendbc"]
 	path = opendbc
 	url = ../../jwinarske/opendbc.git
