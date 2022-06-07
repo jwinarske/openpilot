@@ -8,6 +8,7 @@ set(LIBS
 )
 add_executable(proclogd main.cc proclog.cc)
 target_link_libraries(proclogd PRIVATE ${LIBS})
+add_ipo(proclogd)
 
 if (BUILD_TESTING)
     add_executable(test_proclog tests/test_proclog.cc proclog.cc)

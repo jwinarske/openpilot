@@ -9,4 +9,5 @@ if(SYSTEMD_FOUND)
         ${ZMQ_LINK_LIBRARIES}
         ${SYSTEMD_LINK_LIBRARIES}
     )
+    add_ipo(logcatd)
 endif()

@@ -1,0 +1,5 @@
+macro(add_ipo target)
+    if (IPO_SUPPORT)
+        set_property(TARGET ${target} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+    endif()
+endmacro()

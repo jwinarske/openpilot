@@ -29,13 +29,16 @@ target_link_libraries(logger PRIVATE ${LIBS})
 add_executable(loggerd loggerd.cc)
 target_include_directories(loggerd PRIVATE ${FFMPEG_INCLUDE_DIRS})
 target_link_libraries(loggerd ${LIBS} logger)
+add_ipo(loggerd)
 
 add_executable(encoderd encoderd.cc)
 target_include_directories(encoderd PRIVATE ${FFMPEG_INCLUDE_DIRS})
 target_link_libraries(encoderd ${LIBS} logger)
+add_ipo(encoderd)
 
 add_executable(bootlog bootlog.cc)
 target_link_libraries(bootlog ${LIBS} logger)
+add_ipo(bootlog)
 
 if (BUILD_TESTING)
     add_executable(test_logger

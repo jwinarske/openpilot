@@ -28,3 +28,5 @@ endif()
 
 add_executable(_sensord sensors_qcom2.cc ${SRC_FILES})
 target_link_libraries(_sensord PRIVATE ${LIBS})
+add_ipo(_sensord)
+

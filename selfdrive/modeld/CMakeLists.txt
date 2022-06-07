@@ -86,6 +86,7 @@ target_include_directories(_dmonitoringmodeld PRIVATE
     ${CMAKE_SOURCE_DIR}/third_party/snpe/include
 )
 target_link_libraries(_dmonitoringmodeld PRIVATE ${LIBS})
+add_ipo(_dmonitoringmodeld)
 
 add_executable(_modeld
     modeld.cc
@@ -97,3 +98,4 @@ target_include_directories(_modeld PRIVATE
     ${CMAKE_SOURCE_DIR}/third_party/snpe/include
 )
 target_link_libraries(_modeld PRIVATE ${LIBS})
+add_ipo(_modeld)

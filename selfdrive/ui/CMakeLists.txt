@@ -73,6 +73,7 @@ add_library(asset_obj STATIC ${MOC_RSRC})
 # build soundd
 add_executable(_soundd soundd/main.cc soundd/sound.cc)
 target_link_libraries(_soundd PRIVATE ${QT_LIBS})
+add_ipo(_soundd)
 
 if (BUILD_TESTING)
     add_executable(playsound tests/playsound.cc)
@@ -87,12 +88,16 @@ endif()
 
 add_library(python_helpers qt/qt_window.cc)
 target_link_libraries(python_helpers PRIVATE ${QT_LIBS})
+add_ipo(python_helpers)
 
 # spinner and text window
 add_executable(text qt/text.cc)
 target_link_libraries(text PRIVATE ${QT_LIBS})
+add_ipo(text)
+
 add_executable(spinner qt/spinner.cc)
 target_link_libraries(spinner PRIVATE ${QT_LIBS})
+add_ipo(spinner)
 
 # build main UI
 set(QT_SRC
@@ -108,22 +113,27 @@ set(QT_SRC
 )
 add_executable(_ui ${QT_SRC})
 target_link_libraries(_ui PRIVATE asset_obj ${QT_LIBS})
+add_ipo(_ui)
 
 # setup and factory resetter
 if (BUILD_EXTRAS)
     add_executable(reset qt/setup/reset.cc)
     target_link_libraries(reset PRIVATE ${QT_LIBS})
+    add_ipo(reset)
 
     add_executable(setup qt/setup/setup.cc)
     target_link_libraries(setup PRIVATE asset_obj ${QT_LIBS} ${CURL_LINK_LIBRARIES} common json11)
+    add_ipo(setup)
 
     # buidl updater UI
     add_executable(updater qt/setup/updater.cc)
     target_link_libraries(updater PRIVATE asset_obj ${QT_LIBS})
+    add_ipo(updater)
 
     # build mui
     add_executable(_mui mui.cc)
     target_link_libraries(_mui PRIVATE ${QT_LIBS})
+    add_ipo(_mui)    
 endif()
 
 
@@ -152,8 +162,11 @@ if (APPLE OR BUILD_EXTRAS)
     set(REPLAY_LIBS qt_replay ${FFMPEG_LINK_LIBRARIES} bz2 ${CURL_LINK_LIBRARIES} yuv ncurses ${QT_LIBS})
     target_include_directories(replay PRIVATE ${FFMPEG_INCLUDE_DIRS})
     target_link_libraries(replay PRIVATE ${REPLAY_LIBS})
+    add_ipo(replay)
+
     add_executable(watch3 watch3.cc)
     target_link_libraries(watch3 PRIVATE ${QT_LIBS} common json11 ${ZMQ_LINK_LIBRARIES} visionipc messaging)
+    add_ipo(watch3)
 
     if (BUILD_TESTING)
         add_executable(test_replay replay/tests/test_runner.cc replay/tests/test_replay.cc)
@@ -168,9 +181,11 @@ endif()
 if (BUILD_MAPS)
     add_executable(_navd navd/main.cc navd/route_engine.cc navd/map_renderer.cc)
     target_link_libraries(_navd ${QT_LIBS} common json11)
+    add_ipo(_navd)
 endif()
 
 if (BUILD_MAPS AND BUILD_EXTRAS)
     add_library(map_renderer SHARED navd/map_renderer.cc)
     target_link_libraries(map_renderer PRIVATE ${QT_LIBS} mapbox-gl-native-qt common messaging)
+    add_ipo(map_renderer)
 endif()

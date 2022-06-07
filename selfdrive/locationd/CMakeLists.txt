@@ -97,6 +97,7 @@ set(LOC_LIBS
 )
 
 target_link_libraries(ubloxd PRIVATE ${LOC_LIBS} kaitai)
+add_ipo(ubloxd)
 
 add_executable(locationd
     locationd.cc
@@ -106,9 +107,11 @@ add_executable(locationd
 
 target_include_directories(locationd PRIVATE generated ${CMAKE_SOURCE_DIR}/cereal)
 target_link_libraries(locationd PRIVATE ${LOC_LIBS} transformations kf)
+add_ipo(locationd)
 
 if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/liblocationd.cc)
     add_library(liblocationd SHARED liblocationd.cc)
     target_link_libraries(liblocationd PRIVATE ${LOC_LIBS} transformations kf)
     set_target_properties(liblocationd PROPERTIES OUTPUT_NAME "locationd")
+    add_ipo(liblocationd)
 endif()

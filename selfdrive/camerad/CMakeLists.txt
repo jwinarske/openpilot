@@ -33,6 +33,8 @@ if (${TARGET_ARCH} STREQUAL "larch64")
     target_link_libraries(camerad PUBLIC atomic)
 endif()
 
+add_ipo(camerad)
+
 
 if(BUILD_TESTING)
     add_executable(ae_gray_test

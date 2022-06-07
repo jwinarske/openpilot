@@ -16,6 +16,7 @@ project(selfdrive
     LANGUAGES CXX C
     )
 
+include (macros)
 include (options)
 include (detect_target_arch)
 include (get_deps)
@@ -32,24 +33,18 @@ include_directories(
     ${ZMQ_INCLUDE_DIRS}
 )
 
-if(BUILD_TESTING)
-    find_package(Catch2 REQUIRED)
-    include(CTest)
-    include(Catch)
-    include_directories(${CMAKE_SOURCE_DIR}/third_party/catch2/include)
-endif()
-
 if (APPLE)
     add_compile_definitions(GL_SILENCE_DEPRECATION)
 endif()
-
 
 add_subdirectory(common)
 add_subdirectory(common/kalman)
 add_subdirectory(common/transformations)
 add_subdirectory(cereal)
 add_subdirectory(opendbc/can)
-add_subdirectory(panda)
+if (BUILD_PANDA_FIRMWARE)
+    add_subdirectory(panda)
+endif()
 add_subdirectory(selfdrive/boardd)
 add_subdirectory(selfdrive/camerad)
 add_subdirectory(selfdrive/clocksd)

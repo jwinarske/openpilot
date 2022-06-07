@@ -5,3 +5,4 @@ target_link_libraries(clocksd PRIVATE
     cereal common messaging
     ${ZMQ_LINK_LIBRARIES}
 )
+add_ipo(clocksd)
