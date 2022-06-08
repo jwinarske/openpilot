@@ -9,7 +9,8 @@ option(BUILD_COMPILE_DB "build clang compilation database" OFF)
 option(BUILD_SNPE "use SNPE on PC" OFF)
 option(BUILD_NO_THNEED "avoid using thneed" ON)
 
-option(BUILD_PANDA_FIRMWARE "Build Panda Firmware" ON)
+option(BUILD_PANDA_FIRMWARE "Build Panda Firmware" OFF)
+option(BUILD_WEBCAM "Build Webcam support" OFF)
 
 option(BUILD_LTO "Build with LTO" ON)
 if (BUILD_LTO)
@@ -24,10 +25,9 @@ if(EXISTS "/TICI")
     MESSAGE(STATUS "TICI=${TICI}")
 endif()
 
-set(USE_WEBCAM OFF)
-if(DEFINED ENV{USE_WEBCAM})
-    set(USE_WEBCAM ON)
-    MESSAGE(STATUS "USE_WEBCAM=${USE_WEBCAM}")
+if(BUILD_WEBCAM)
+    add_compile_definitions(USE_WEBCAM)
+    find_package(OpenCV REQUIRED)
 endif()
 
 if(BUILD_TESTING)

@@ -84,3 +84,6 @@ selfdrive/modeld/models/*.thneed
 build/
 
 !**/.gitkeep
+
+cmake-build-debug
+cmake-build-release

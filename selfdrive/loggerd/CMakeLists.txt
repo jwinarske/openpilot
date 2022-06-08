@@ -25,6 +25,7 @@ endif()
 add_library(logger SHARED ${SRC_FILES})
 target_include_directories(logger PRIVATE libyuv ${FFMPEG_INCLUDE_DIRS})
 target_link_libraries(logger PRIVATE ${LIBS})
+add_ipo(logger)
 
 add_executable(loggerd loggerd.cc)
 target_include_directories(loggerd PRIVATE ${FFMPEG_INCLUDE_DIRS})
